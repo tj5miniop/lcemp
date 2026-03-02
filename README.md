@@ -1,3 +1,10 @@
+# LCEMP - Minecraft Legacy Console Edition
+
+##### NOTICE - this is a fork of the lcemp/lcemp repository with the aim of contributing back and updating the game to run on newer API's (if possible). I am also going to help ensure support for Linux/MacOS by helping with overall compatibility withe WiNE and Proton
+
+I am also new to C++ as well so don't expect development to be as smooth
+
+# ----------------------------------------------------------------------------------------------------------
 LCEMP is my Minecraft Legacy Console Edition source fork that enables LAN multiplayer hosting.
 
 notes:
