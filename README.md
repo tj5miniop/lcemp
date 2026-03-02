@@ -1,19 +1,13 @@
-# LCEMP - Minecraft Legacy Console Edition
+# Minecraft LCEMP
+LCEMP is my Minecraft Legacy Console Edition source fork that enables LAN multiplayer hosting along side more complete pc compatibility.
 
-##### NOTICE - this is a fork of the lcemp/lcemp repository with the aim of contributing back and updating the game to run on newer API's (if possible). I am also going to help ensure support for Linux/MacOS by helping with overall compatibility withe WiNE and Proton
-
-I am also new to C++ as well so don't expect development to be as smooth
-
-# ----------------------------------------------------------------------------------------------------------
-LCEMP is my Minecraft Legacy Console Edition source fork that enables LAN multiplayer hosting.
-
-notes:
+## notes:
   - This is NOT the full source code.
   - You need to provide the required asset files yourself.
   - Code quality is not perfect. I am still learning C++.
   - If you use this in other LCE-based projects, credit me.
 
-features:
+## features:
   - Fully working multiplayer
   - Breaking and placing blocks synced
   - Kick system
@@ -22,7 +16,7 @@ features:
   - Gamma fixed
   - Fullscreen support
 
-launch_arguments:
+## launch_arguments:
   - name: -name
     usage: "-name <username>"
     description: Sets your in-game username.
@@ -41,8 +35,8 @@ launch_arguments:
 example:
   command: "Minecraft.Client.exe -name Steve -ip 192.168.0.25 -port 25565"
 
-required_assets:
-    directories:
+## Compiling
+### directories:
   - path: Minecraft.Client\music\
   - path: Minecraft.Client\Common\Media\
   - path: Minecraft.Client\Common\res\
@@ -86,20 +80,20 @@ required_assets:
   - path: Minecraft.Client\PSVita\Sentient\
   - path: Minecraft.Client\PS3\PS3Extras\boost_1_53_0\
 
-    files:
+### files:
   - path: Minecraft.Client\xbox\MinecraftWindows.rc
   - path: Minecraft.Client\xbox\MinecraftWindows.ico
   - path: Minecraft.Client\xbox\small.ico
   - path: x64\Debug\iggy_w64.dll
   - path: x64\Debug\mss64.dll
 
-install:
+### install:
   - Get required assets.
   - Replace your Minecraft.Client and Minecraft.World source folder with this one.
   - Build.
   - Run with optional launch arguments if needed.
 
-contributing:
+## contributing:
   - If you find issues, open a PR.
   - I will review and merge if valid.
 
