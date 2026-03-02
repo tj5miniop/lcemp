@@ -3295,6 +3295,67 @@ void Minecraft::tick(bool bFirst, bool bUpdateTextures)
 			}
 		}
 
+#ifdef _WINDOWS64 // allows for the player to get the block they are looking at in creative by middle clicking.
+		if (iPad == 0 && player->abilities.instabuild && g_KBMInput.IsMouseButtonPressed(KeyboardMouseInput::MOUSE_MIDDLE) && hitResult != NULL && hitResult->type == HitResult::TILE)
+		{
+			//printf("MIDDLE CLICK TEST!!");
+			int tileId = level->getTile(hitResult->x, hitResult->y, hitResult->z);
+			Tile *tile = (tileId > 0 && tileId < Tile::TILE_NUM_COUNT) ? Tile::tiles[tileId] : NULL;
+
+			if (tile != NULL)
+			{
+				int cloneId = tile->cloneTileId(level, hitResult->x, hitResult->y, hitResult->z);
+
+				if (cloneId > 0 && cloneId < Item::ITEM_NUM_COUNT && Item::items[cloneId] != NULL)
+				{
+					int cloneData = tile->cloneTileData(level, hitResult->x, hitResult->y, hitResult->z);
+					bool checkData = Item::items[cloneId]->isStackedByData();
+
+					int quickbarSlot = -1;
+
+					for (int slot = 0; slot < Inventory::getSelectionSize(); ++slot)
+					{
+						shared_ptr<ItemInstance> quickbarItem = player->inventory->items[slot];
+						if (quickbarItem == NULL || quickbarItem->id != cloneId)
+						{
+							continue;
+						}
+
+						if (!checkData || quickbarItem->getAuxValue() == cloneData)
+						{
+							quickbarSlot = slot;
+							break;
+						}
+					}
+
+					if (quickbarSlot >= 0)
+					{
+						player->inventory->selected = quickbarSlot;
+					}
+					else
+					{
+						player->inventory->grabTexture(cloneId, cloneData, checkData, true);
+					}
+
+					// should prevent ghost items/blocks
+					shared_ptr<ItemInstance> selctedItem = player->inventory->getSelected();
+					if (gameMode != NULL && selctedItem != NULL)
+					{
+						const int creativeHotbarSlotStart = 36;
+						gameMode->handleCreativeModeItemAdd(selctedItem, creativeHotbarSlotStart + player->inventory->selected);
+					}
+
+					if (gameMode != NULL && gameMode->getTutorial() != NULL)
+					{
+						gameMode->getTutorial()->onSelectedItemChanged(player->inventory->getSelected());
+					}
+
+					player->updateRichPresence();
+				}
+			}
+		}
+#endif
+
 		if( gameMode->isInputAllowed(MINECRAFT_ACTION_ACTION) )
 		{
 			if((player->ullButtonsPressed&(1LL<<MINECRAFT_ACTION_ACTION)))

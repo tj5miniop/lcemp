@@ -777,11 +777,11 @@ void UIController::tickInput()
 				}
 
 
-				int wheel = g_KBMInput.GetMouseWheel();
-				if (wheel > 0)
-					handleKeyPress(0, ACTION_MENU_UP);
-				else if (wheel < 0)
-					handleKeyPress(0, ACTION_MENU_DOWN);
+				//int wheel = g_KBMInput.GetMouseWheel();
+				//if (wheel > 0)
+					//handleKeyPress(0, ACTION_MENU_UP);
+				//else if (wheel < 0)
+					//handleKeyPress(0, ACTION_MENU_DOWN);
 			}
 #endif
 			handleInput();
@@ -1048,6 +1048,17 @@ void UIController::handleKeyPress(unsigned int iPad, unsigned int key)
 			if (g_KBMInput.IsMouseButtonPressed(KeyboardMouseInput::MOUSE_LEFT))  { pressed = true; down = true; }
 			if (g_KBMInput.IsMouseButtonReleased(KeyboardMouseInput::MOUSE_LEFT)) { released = true; down = false; }
 			if (!pressed && !released && g_KBMInput.IsMouseButtonDown(KeyboardMouseInput::MOUSE_LEFT)) { down = true; }
+		}
+
+		// scroll
+		if (!g_KBMInput.IsMouseGrabbed())
+		{
+			int wheel = g_KBMInput.GetMouseWheel();
+			if ((key == ACTION_MENU_OTHER_STICK_UP && wheel >0) || (key == ACTION_MENU_OTHER_STICK_DOWN && wheel < 0))
+			{
+				pressed = true;
+				down = true;
+			}
 		}
 	}
 #endif
